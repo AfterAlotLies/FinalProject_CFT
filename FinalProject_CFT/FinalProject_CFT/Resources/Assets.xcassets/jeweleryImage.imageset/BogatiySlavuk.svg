@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 350 350">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 5px;
+      }
+
+      .cls-2 {
+        fill: #000;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <path class="cls-2" d="M181.8,328.88c-60.65,0-110-49.35-110-110s49.35-110,110-110,110,49.35,110,110-49.35,110-110,110ZM181.8,128.88c-49.63,0-90,40.37-90,90s40.37,90,90,90,90-40.37,90-90-40.37-90-90-90Z"/>
+  <polygon class="cls-2" points="181.8 168.69 245.1 93.69 118.5 93.69 181.8 168.69"/>
+  <polygon class="cls-2" points="245.1 93.69 118.5 93.69 138.5 70.48 225.1 70.48 245.1 93.69"/>
+  <polygon class="cls-2" points="205.1 93.69 158.5 93.69 168.5 70.48 195.1 70.48 205.1 93.69"/>
+  <polygon class="cls-2" points="205.1 93.69 158.5 93.69 181.8 168.69 181.8 168.69 205.1 93.69"/>
+  <g>
+    <path class="cls-1" d="M110.32,69.64v9.74"/>
+    <path class="cls-1" d="M110.32,48.87v9.74"/>
+    <path class="cls-1" d="M104.8,64.12h-9.74"/>
+    <path class="cls-1" d="M125.57,64.12h-9.74"/>
+  </g>
+  <g>
+    <path class="cls-1" d="M251.68,48.87v9.74"/>
+    <path class="cls-1" d="M251.68,28.1v9.74"/>
+    <path class="cls-1" d="M246.16,43.35h-9.74"/>
+    <path class="cls-1" d="M266.93,43.35h-9.74"/>
+  </g>
+</svg>
