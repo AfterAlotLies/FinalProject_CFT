@@ -15,7 +15,6 @@ protocol ICategoriesCollectionViewDataSource {
 class CategoriesCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
     var selectedCell: IndexPath.Element = 0
-//    private var categoriesNameArray = [String]()
     private let categoriesImageArray = ["electronicsImage", "jeweleryImage", "mensImage", "womenImage"]
     private let categoriesArray = ["Gadget", "Jewelery", "Men", "Women"]
     

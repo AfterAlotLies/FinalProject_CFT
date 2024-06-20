@@ -11,6 +11,7 @@ import AlamofireImage
 protocol INetworkManager {
     func getImageFromUrl(_ url: String, completion: @escaping (Image?, Error?) -> Void)
     func getProducts(for category: RequestType, completion: @escaping ([DataRepository]?, Error?) -> Void)
+    func loginUser(username: String, password: String, completion: @escaping (TokenData?, Error?) -> Void)
 }
 
 class NetworkManager: INetworkManager {
@@ -23,7 +24,24 @@ class NetworkManager: INetworkManager {
             case .success(let data):
                 completion(data, nil)
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func loginUser(username: String, password: String, completion: @escaping (TokenData?, Error?) -> Void){
+        let url = "https://fakestoreapi.com/auth/login"
+        
+        let parameters: [String: String] = [
+            "username": username,
+            "password": password
+        ]
+        
+        AF.request(url, method: .post, parameters: parameters).validate().responseDecodable(of: TokenData.self) { response in
+            switch response.result {
+            case .success(let data):
+                completion(data, nil)
+            case .failure(let error):
                 completion(nil, error)
             }
         }

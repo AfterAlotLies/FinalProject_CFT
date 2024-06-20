@@ -9,11 +9,6 @@ import UIKit
 
 class CategoriesCollectionViewCell: UICollectionViewCell {
     
-    static let identifer = String(describing: CategoriesCollectionViewCell.self)
-    
-    private let backgroundCellColor: UIColor = UIColor(red: 221.0 / 255.0, green: 224.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
-    private let borderChoosenCellColor: UIColor = UIColor(red: 43.0 / 255.0, green: 57.0 / 255.0, blue: 185.0 / 255.0, alpha: 1)
-    
     private lazy var categoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +33,11 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         label.textColor = .lightGray
         return label
     }()
+    
+    static let identifer = String(describing: CategoriesCollectionViewCell.self)
+    
+    private let backgroundCellColor: UIColor = UIColor(red: 221.0 / 255.0, green: 224.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
+    private let borderChoosenCellColor: UIColor = UIColor(red: 43.0 / 255.0, green: 57.0 / 255.0, blue: 185.0 / 255.0, alpha: 1)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

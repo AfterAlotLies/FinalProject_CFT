@@ -8,13 +8,15 @@
 import UIKit
 
 protocol IProductsCollectionViewDataSource {
-    func addImage(image: UIImage)
+    func addImage(image: UIImage?)
     func addProducts(data: [DataRepository])
     func removeItems()
+    func setAddToCartButton(completion: ((Int) -> Void)?)
 }
 
 class ProductsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
+    private var addToCartButton: ((Int) -> Void)?
     private var imagesArray = [UIImage]()
     private var productsData = [DataRepository]()
     
@@ -31,15 +33,25 @@ class ProductsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         cell.setProductsData(data: ProductsViewModel(title: cellData.title,
                                                      price: cellData.price,
                                                      rate: cellData.rating.rate))
-        return cell
         
+        
+        cell.setAddProductAction { [weak self] in
+            guard let self = self else { return }
+            self.addToCartButton?(indexPath.item)
+        }
+        
+        return cell
     }
 }
 
 extension ProductsCollectionViewDataSource : IProductsCollectionViewDataSource {
     
-    func addImage(image: UIImage) {
-        imagesArray.append(image)
+    func addImage(image: UIImage?) {
+        if let image {
+            imagesArray.append(image)
+        } else {
+            imagesArray.append(UIImage(named: "errorImage")!)
+        }
     }
     
     func addProducts(data: [DataRepository]) {
@@ -50,4 +62,9 @@ extension ProductsCollectionViewDataSource : IProductsCollectionViewDataSource {
         productsData.removeAll()
         imagesArray.removeAll()
     }
+    
+    func setAddToCartButton(completion: ((Int) -> Void)?) {
+        addToCartButton = completion
+    }
+    
 }

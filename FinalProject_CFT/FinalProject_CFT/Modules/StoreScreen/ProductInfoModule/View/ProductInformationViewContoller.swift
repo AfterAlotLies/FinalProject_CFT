@@ -49,7 +49,7 @@ private extension ProductInformationViewContoller {
     
     func setupController() {
         view.backgroundColor = .systemBackground
-
+        
         view.addSubview(productInfoView)
         
         setupConstraints()

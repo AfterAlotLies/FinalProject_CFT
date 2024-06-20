@@ -63,7 +63,7 @@ class ProductInfoView: UIView {
     private lazy var addToCartButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add", for: .normal)
+        button.setTitle("Add to cart", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = buttonBackgroundColor
         button.layer.cornerRadius = 15
@@ -160,7 +160,8 @@ private extension ProductInfoView {
             addToCartButton.topAnchor.constraint(equalTo: productDescriptionView.bottomAnchor, constant: 8),
             addToCartButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:  16),
             addToCartButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            addToCartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            addToCartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
+            addToCartButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

@@ -20,3 +20,7 @@ struct Rating: Codable {
     let rate: Double
     let count: Int
 }
+
+struct TokenData: Codable {
+    let token: String
+}

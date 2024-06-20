@@ -19,10 +19,12 @@ class ProductsControllerCoordinator: Coordinator {
         let networkManager = NetworkManager()
         let categoriesDataSource = CategoriesCollectionViewDataSource()
         let productsDataSource = ProductsCollectionViewDataSource()
+        let shoppingService = ShoppingCartService()
         
         let presenter = ProductsPresenter(networkManager: networkManager,
                                           categoriesDataSource: categoriesDataSource,
-                                          productsDataSource: productsDataSource)
+                                          productsDataSource: productsDataSource,
+                                          shoppingCartService: shoppingService)
         
         let productsController = ProductsListViewController(productsPresenter: presenter,
                                                             categoriesDataSource: categoriesDataSource,

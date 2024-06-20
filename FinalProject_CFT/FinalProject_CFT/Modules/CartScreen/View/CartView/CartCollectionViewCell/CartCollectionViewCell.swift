@@ -1,13 +1,13 @@
 //
-//  ProductsCollectionViewCell.swift
+//  CartCollectionViewCell.swift
 //  FinalProject_CFT
 //
-//  Created by Vyacheslav on 12.06.2024.
+//  Created by Vyacheslav on 20.06.2024.
 //
 
 import UIKit
 
-class ProductsCollectionViewCell: UICollectionViewCell {
+class CartCollectionViewCell: UICollectionViewCell {
     
     private lazy var productImageView: UIImageView = {
         let imageView = UIImageView()
@@ -47,9 +47,9 @@ class ProductsCollectionViewCell: UICollectionViewCell {
     private lazy var addToCartButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("+", for: .normal)
+        button.setTitle("-", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = buttonBackgroundColor
+        button.backgroundColor = .red
         
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 1
@@ -60,7 +60,7 @@ class ProductsCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    static let identifer = String(describing: ProductsCollectionViewCell.self)
+    static let identifer = String(describing: CartCollectionViewCell.self)
     
     private let buttonBackgroundColor: UIColor = UIColor(red: 83.0 / 255.0, green: 177.0 / 255.0, blue: 117.0 / 255.0, alpha: 1)
     private var addProductHandler: (() -> Void)?
@@ -79,10 +79,10 @@ class ProductsCollectionViewCell: UICollectionViewCell {
         productImageView.image = image
     }
     
-    func setProductsData(data: ProductsViewModel) {
+    func setProductsData(data: CartViewModel) {
         productNameLabel.text = data.title
         productPriceLabel.text = "\(data.price)$"
-        productRateLabel.text = "\(Int(data.rate))"
+        productRateLabel.text = "\(Int(data.rating))"
     }
     
     func setAddProductAction(completion: (() -> Void)?) {
@@ -91,7 +91,7 @@ class ProductsCollectionViewCell: UICollectionViewCell {
     
 }
 
-private extension ProductsCollectionViewCell {
+private extension CartCollectionViewCell {
     
     func setupItem() {
         addSubview(productImageView)
@@ -165,3 +165,4 @@ private extension ProductsCollectionViewCell {
         addProductHandler?()
     }
 }
+

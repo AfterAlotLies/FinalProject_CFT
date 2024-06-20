@@ -25,20 +25,31 @@ class ProductsPresenter: IProductsPresenter {
     private weak var ui: IProductsListViewController?
     
     private let networkManager: INetworkManager
-    private let categoriesDataSource: CategoriesCollectionViewDataSource
-    private let productsDataSource: ProductsCollectionViewDataSource
+    private let categoriesDataSource: ICategoriesCollectionViewDataSource
+    private let productsDataSource: IProductsCollectionViewDataSource
+    private let shoppingCartService: IShoppingCart
     
     private var dataRepository = [DataRepository]()
     
-    init(networkManager: INetworkManager, categoriesDataSource: CategoriesCollectionViewDataSource, productsDataSource: ProductsCollectionViewDataSource) {
+    init(networkManager: INetworkManager, categoriesDataSource: CategoriesCollectionViewDataSource, productsDataSource: ProductsCollectionViewDataSource, shoppingCartService: IShoppingCart) {
         self.networkManager = networkManager
         self.categoriesDataSource = categoriesDataSource
         self.productsDataSource = productsDataSource
+        self.shoppingCartService = shoppingCartService
     }
     
     func didLoad(ui: IProductsListViewController) {
         self.ui = ui
         getProductsData()
+        productsDataSource.setAddToCartButton { [weak self] index in
+            guard let self = self else { return }
+            if let userToken = KeyStorage.shared.getToken(), !userToken.isEmpty {
+                self.shoppingCartService.addCartData(productData: dataRepository[index])
+                self.ui?.showSuccess(successMessage: "Your product added to your cart!")
+            } else {
+                self.ui?.showError(errorMessage: "You are not logged in. Please retry after log in")
+            }
+        }
     }
     
     func didSelectItem(_ indexItem: IndexPath.Element) {
@@ -78,7 +89,9 @@ private extension ProductsPresenter {
         networkManager.getProducts(for: category) { [weak self] response, error in
             guard let self = self else { return }
             if error != nil {
-                self.ui?.showError(errorMessage: error?.localizedDescription ?? "something gone wrong")
+                DispatchQueue.main.async {
+                    self.ui?.showError(errorMessage: error?.localizedDescription ?? "something gone wrong")
+                }
             } else {
                 if let response {
                     self.productsDataSource.addProducts(data: response)
@@ -86,13 +99,17 @@ private extension ProductsPresenter {
                     response.forEach {
                         self.networkManager.getImageFromUrl($0.image) { imageResponse, error in
                             if error != nil {
-                                self.ui?.showError(errorMessage: error?.localizedDescription ?? "something gone wrong")
+                                DispatchQueue.main.async {
+                                    self.productsDataSource.addImage(image: nil)
+                                }
                             } else {
                                 if let imageResponse {
                                     self.productsDataSource.addImage(image: imageResponse)
                                 }
                             }
-                            self.ui?.reloadProductsCollectionView()
+                            DispatchQueue.main.async {
+                                self.ui?.reloadProductsCollectionView()
+                            }
                             self.ui?.setLoaderState(state: .nonAnimating)
                         }
                     }

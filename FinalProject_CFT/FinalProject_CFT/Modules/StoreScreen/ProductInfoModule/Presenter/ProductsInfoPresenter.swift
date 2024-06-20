@@ -38,7 +38,11 @@ private extension ProductsInfoPresenter {
         networkManager.getImageFromUrl(productData.image) { [weak self] imageResponse, error in
             guard let self = self else { return }
             if error != nil {
-                print("error") // TODO: Обработка ошибки
+                self.ui?.setData(data: ProductInfoModel(title: productData.title,
+                                                        price: productData.price,
+                                                        description: productData.description,
+                                                        rating: productData.rating.rate,
+                                                        image: nil))
             } else {
                 if let imageResponse {
                     self.ui?.setData(data: ProductInfoModel(title: productData.title,
@@ -46,12 +50,6 @@ private extension ProductsInfoPresenter {
                                                             description: productData.description,
                                                             rating: productData.rating.rate,
                                                             image: imageResponse))
-                } else {
-                    self.ui?.setData(data: ProductInfoModel(title: productData.title,
-                                                            price: productData.price,
-                                                            description: productData.description,
-                                                            rating: productData.rating.rate,
-                                                            image: nil))
                 }
             }
         }

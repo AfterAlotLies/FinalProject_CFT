@@ -16,7 +16,14 @@ class CartControllerCoordinator: Coordinator {
     }
     
     func start() {
-        let cartViewController = CartViewController()
+        let networkManager = NetworkManager()
+        let cartDataSource = CartCollectionViewDataSource()
+        let shoppingService = ShoppingCartService()
+        let cartPresenter = CartPresenter(cartDataSource: cartDataSource,
+                                          shoppingService: shoppingService,
+                                          networkManager: networkManager)
+        let cartViewController = CartViewController(cartDataSource: cartDataSource,
+                                                    cartPresenter: cartPresenter)
         cartViewController.carControllerCoordinator = self
         navigationController.pushViewController(cartViewController, animated: true)
     }

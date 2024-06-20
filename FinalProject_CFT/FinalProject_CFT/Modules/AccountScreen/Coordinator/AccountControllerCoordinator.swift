@@ -16,7 +16,9 @@ class AccountControllerCoordinator: Coordinator {
     }
     
     func start() {
-        let accountViewController = AccountViewController()
+        let networkManager = NetworkManager()
+        let presenter = AccountPresenter(networkManager: networkManager)
+        let accountViewController = AccountViewController(accountPresenter: presenter)
         accountViewController.accountControllerCoordinator = self
         navigationController.pushViewController(accountViewController, animated: true)
     }

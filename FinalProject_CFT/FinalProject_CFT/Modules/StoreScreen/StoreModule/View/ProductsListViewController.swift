@@ -19,6 +19,7 @@ protocol IProductsListViewController: AnyObject {
     func setLoaderState(state: LoaderState)
     func showNextController(_ viewController: UIViewController)
     func showError(errorMessage: String)
+    func showSuccess(successMessage: String)
 }
 
 class ProductsListViewController: UIViewController {
@@ -51,6 +52,7 @@ class ProductsListViewController: UIViewController {
         setupController()
         productsPresenter.didLoad(ui: self)
     }
+
 }
 
 extension ProductsListViewController: IProductsListViewController {
@@ -77,12 +79,19 @@ extension ProductsListViewController: IProductsListViewController {
     }
     
     func showNextController(_ viewController: UIViewController) {
+        viewController.hidesBottomBarWhenPushed = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     func showError(errorMessage: String) {
         showErrorAlert(error: errorMessage)
     }
+    
+    func showSuccess(successMessage: String) {
+        showSuccessAlert(success: successMessage)
+    }
+
 }
 
 extension ProductsListViewController: ICollectionViewDelegate {
@@ -98,6 +107,7 @@ extension ProductsListViewController: ICollectionViewDelegate {
 private extension ProductsListViewController {
     
     func setupController() {
+        title = "Shop"
         view.backgroundColor = .systemBackground
         view.addSubview(productsView)
         
@@ -115,6 +125,13 @@ private extension ProductsListViewController {
     
     func showErrorAlert(error: String) {
         let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+    }
+    
+    func showSuccessAlert(success: String) {
+        let alert = UIAlertController(title: "Success!", message: success, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(okButton)
         self.present(alert, animated: true)
