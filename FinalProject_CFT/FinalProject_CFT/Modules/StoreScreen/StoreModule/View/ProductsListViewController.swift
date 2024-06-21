@@ -16,6 +16,7 @@ protocol IProductsListViewController: AnyObject {
     func showNextController(_ viewController: UIViewController)
     func showError(errorMessage: String)
     func showSuccess(successMessage: String)
+    func setStateCategoriesCollection(_ state: CategoriesCollectionUserInteractionState)
 }
 
 // MARK: - ProductsListViewController
@@ -102,6 +103,15 @@ extension ProductsListViewController: IProductsListViewController {
     
     func showSuccess(successMessage: String) {
         showSuccessAlert(success: successMessage)
+    }
+    
+    func setStateCategoriesCollection(_ state: CategoriesCollectionUserInteractionState) {
+        switch state {
+        case .enabled:
+            productsView.setCategoriesCollectionState(.enabled)
+        case .disabled:
+            productsView.setCategoriesCollectionState(.disabled)
+        }
     }
 
 }

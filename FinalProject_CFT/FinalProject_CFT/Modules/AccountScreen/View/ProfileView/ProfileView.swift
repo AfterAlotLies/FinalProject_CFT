@@ -12,6 +12,7 @@ class ProfileView: UIView {
     
     private enum Constants {
         static let introductionLabelText = "There is nothing to do but we are in proccess! Now u can add products to your cart"
+        static let logoutButtonTitle = "Log Out"
         static let logoutButtonBackgroundColor: UIColor = UIColor(red: 242.0 / 255.0, green: 243.0 / 255.0, blue: 242.0 / 255.0, alpha: 1)
         static let topAnchorMargin: CGFloat = 16
         static let leadingAnchorMargin: CGFloat = 16
@@ -44,7 +45,7 @@ class ProfileView: UIView {
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Log Out", for: .normal)
+        button.setTitle(Constants.logoutButtonTitle, for: .normal)
         button.setTitleColor(.systemGreen, for: .normal)
         
         button.layer.cornerRadius = 15

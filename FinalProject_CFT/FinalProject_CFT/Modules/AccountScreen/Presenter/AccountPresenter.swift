@@ -13,6 +13,7 @@ protocol IAccountPresenter {
     func loginAction(username: String, password: String)
     func notifyErrorToUser()
     func logoutAction()
+    func hideKeyboardAction()
 }
 
 // MARK: - AccountPresenter
@@ -57,6 +58,10 @@ class AccountPresenter: IAccountPresenter {
     
     func notifyErrorToUser() {
         ui?.showErrorAlert(Constants.errorFieldAlertMessage)
+    }
+    
+    func hideKeyboardAction() {
+        ui?.hideKeyboard()
     }
 }
 

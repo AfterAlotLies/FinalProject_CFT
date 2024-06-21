@@ -94,6 +94,7 @@ private extension ProductsPresenter {
         productsDataSource.removeItems()
         dataRepository.removeAll()
         ui?.setLoaderState(state: .animating)
+        ui?.setStateCategoriesCollection(.disabled)
         networkManager.getProducts(for: category) { [weak self] response, error in
             guard let self = self else { return }
             if error != nil {
@@ -117,6 +118,7 @@ private extension ProductsPresenter {
                             }
                             self.ui?.reloadProductsCollectionView()
                             self.ui?.setLoaderState(state: .nonAnimating)
+                            self.ui?.setStateCategoriesCollection(.enabled)
                         }
                     }
                     self.dataRepository = response

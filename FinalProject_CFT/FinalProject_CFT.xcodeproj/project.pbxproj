@@ -24,6 +24,7 @@
 		114412AD2C2571E20048B1E4 /* UiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114412AC2C2571E20048B1E4 /* UiState.swift */; };
 		114412AF2C25721A0048B1E4 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114412AE2C25721A0048B1E4 /* ViewState.swift */; };
 		114412B12C2572330048B1E4 /* AppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114412B02C2572330048B1E4 /* AppErrors.swift */; };
+		114412B32C25C13D0048B1E4 /* CategoriesCollectionUserInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114412B22C25C13D0048B1E4 /* CategoriesCollectionUserInteractionState.swift */; };
 		11ED9B2E2C1833280066CD9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ED9B2D2C1833280066CD9C /* AppDelegate.swift */; };
 		11ED9B302C1833280066CD9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ED9B2F2C1833280066CD9C /* SceneDelegate.swift */; };
 		11ED9B382C1833280066CD9C /* FinalProject_CFT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11ED9B362C1833280066CD9C /* FinalProject_CFT.xcdatamodeld */; };
@@ -68,6 +69,7 @@
 		114412AC2C2571E20048B1E4 /* UiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiState.swift; sourceTree = "<group>"; };
 		114412AE2C25721A0048B1E4 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		114412B02C2572330048B1E4 /* AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
+		114412B22C25C13D0048B1E4 /* CategoriesCollectionUserInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionUserInteractionState.swift; sourceTree = "<group>"; };
 		11ED9B2A2C1833280066CD9C /* FinalProject_CFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject_CFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11ED9B2D2C1833280066CD9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11ED9B2F2C1833280066CD9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				114412AC2C2571E20048B1E4 /* UiState.swift */,
 				114412AE2C25721A0048B1E4 /* ViewState.swift */,
 				114412B02C2572330048B1E4 /* AppErrors.swift */,
+				114412B22C25C13D0048B1E4 /* CategoriesCollectionUserInteractionState.swift */,
 			);
 			path = HelperEnums;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				11ED9B2E2C1833280066CD9C /* AppDelegate.swift in Sources */,
 				11ED9B862C1EE4640066CD9C /* ProductInfoView.swift in Sources */,
 				11ED9B892C2016490066CD9C /* ProductsInfoPresenter.swift in Sources */,
+				114412B32C25C13D0048B1E4 /* CategoriesCollectionUserInteractionState.swift in Sources */,
 				11ED9B612C184A000066CD9C /* AccountControllerCoordinator.swift in Sources */,
 				11ED9B662C1882440066CD9C /* DataRepository.swift in Sources */,
 				11ED9B492C1836840066CD9C /* ProductsListViewController.swift in Sources */,

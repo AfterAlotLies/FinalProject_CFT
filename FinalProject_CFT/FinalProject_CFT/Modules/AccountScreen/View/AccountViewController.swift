@@ -13,6 +13,7 @@ protocol IAccountViewController: AnyObject {
     func controlAuthViewState(_ state: ViewState)
     func controlProfileViewState(_ state: ViewState)
     func setUserName(_ name: String)
+    func hideKeyboard()
 }
 
 // MARK: - AccountViewController
@@ -56,6 +57,7 @@ class AccountViewController: UIViewController {
         accountPresenter.didLoad(ui: self)
         userLogout()
         userLogin()
+        setupHideKeyboardGesture()
     }
 }
 
@@ -90,6 +92,10 @@ extension AccountViewController: IAccountViewController {
     
     func setUserName(_ name: String) {
         profileView.setUserName(username: name)
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
 }
 
@@ -146,5 +152,15 @@ private extension AccountViewController {
             guard let self = self else { return }
             self.accountPresenter.logoutAction()
         }
+    }
+    
+    func setupHideKeyboardGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(userActionOnView))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc
+    func userActionOnView() {
+        accountPresenter.hideKeyboardAction()
     }
 }

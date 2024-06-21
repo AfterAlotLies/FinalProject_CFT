@@ -94,6 +94,15 @@ class ProductsView: UIView {
         loaderIndicator.isHidden = true
     }
     
+    func setCategoriesCollectionState(_ state: CategoriesCollectionUserInteractionState) {
+        switch state {
+        case .enabled:
+            caterogiesCollection.isUserInteractionEnabled = true
+        case .disabled:
+            caterogiesCollection.isUserInteractionEnabled = false
+        }
+    }
+    
     func isCategoriesCollection(collectionView: UICollectionView) -> Bool {
         if collectionView == caterogiesCollection {
             return true
