@@ -38,22 +38,7 @@ class TabBarCoordinator: Coordinator {
     
     func start() {
         setupViewControllers()
-//        setupTabBarItems()
         addTopBorderToTabBar()
-        
-    }
-    
-    func updateTabBarAppearance(with style: UIUserInterfaceStyle) {
-        switch style {
-        case .dark:
-            tabBarController.tabBar.barTintColor = .black
-            tabBarController.tabBar.unselectedItemTintColor = .white
-            tabBarController.tabBar.tintColor = .lightGray
-        default:
-            tabBarController.tabBar.barTintColor = .white
-            tabBarController.tabBar.unselectedItemTintColor = .black
-            tabBarController.tabBar.tintColor = Constants.tabBarTinColor
-        }
     }
     
 }
@@ -95,13 +80,4 @@ private extension TabBarCoordinator {
         tabBarController.tabBar.layer.borderWidth = 0.5
         tabBarController.tabBar.layer.borderColor = UIColor.lightGray.cgColor
     }
-    
-    func setupTabBarItems() {
-        tabBarController.tabBar.unselectedItemTintColor = .black
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.barTintColor = .white
-        tabBarController.tabBar.tintColor = Constants.tabBarTinColor
-    }
-    
-   
 }
