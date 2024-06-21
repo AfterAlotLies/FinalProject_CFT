@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - IProductsInfoPresenter protocol
 protocol IProductsInfoPresenter {
-    func didLoad(ui: IProductInformationViewContoller)
+    func didLoad(ui: IProductInformationViewController)
 }
 
 // MARK: - ProductsInfoPresenter
@@ -20,7 +20,7 @@ class ProductsInfoPresenter: IProductsInfoPresenter {
         static let errorMessage = "You are not logged in. Please retry after log in"
     }
     
-    private weak var ui: IProductInformationViewContoller?
+    private weak var ui: IProductInformationViewController?
     private let productData: DataRepository
     private let networkManager: INetworkManager
     private let shoppingService: IShoppingCart
@@ -32,7 +32,7 @@ class ProductsInfoPresenter: IProductsInfoPresenter {
         self.shoppingService = shoppingService
     }
     
-    func didLoad(ui: IProductInformationViewContoller) {
+    func didLoad(ui: IProductInformationViewController) {
         self.ui = ui
         setUI()
         setAddToCartAction()

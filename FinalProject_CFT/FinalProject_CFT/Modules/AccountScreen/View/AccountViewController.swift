@@ -134,9 +134,9 @@ private extension AccountViewController {
             guard let self = self else { return }
             if let username = self.authView.getUsername(),
                let password = self.authView.getPassword() {
-                self.accountPresenter.loginAction(ui: self,username: username, password: password)
+                self.accountPresenter.loginAction(username: username, password: password)
             } else {
-                self.accountPresenter.notifyErrorToUser(ui: self)
+                self.accountPresenter.notifyErrorToUser()
             }
         }
     }

@@ -10,8 +10,8 @@ import Foundation
 // MARK: - IAccountPresenter protocol
 protocol IAccountPresenter {
     func didLoad(ui: IAccountViewController)
-    func loginAction(ui: IAccountViewController, username: String, password: String)
-    func notifyErrorToUser(ui: IAccountViewController)
+    func loginAction(username: String, password: String)
+    func notifyErrorToUser()
     func logoutAction()
 }
 
@@ -45,8 +45,7 @@ class AccountPresenter: IAccountPresenter {
         }
     }
     
-    func loginAction(ui: IAccountViewController, username: String, password: String) {
-        self.ui = ui
+    func loginAction(username: String, password: String) {
         login(username: username, password: password)
     }
     
@@ -56,9 +55,8 @@ class AccountPresenter: IAccountPresenter {
         ui?.controlAuthViewState(.nonHidden)
     }
     
-    func notifyErrorToUser(ui: IAccountViewController) {
-        self.ui = ui
-        ui.showErrorAlert(Constants.errorFieldAlertMessage)
+    func notifyErrorToUser() {
+        ui?.showErrorAlert(Constants.errorFieldAlertMessage)
     }
 }
 

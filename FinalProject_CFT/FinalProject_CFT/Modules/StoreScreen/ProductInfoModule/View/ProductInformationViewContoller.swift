@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - IProductInformationViewContoller protocol
-protocol IProductInformationViewContoller: AnyObject {
+protocol IProductInformationViewController: AnyObject {
     func setData(data: ProductInfoModel)
     func getActionHandler(completion: (() -> Void)?)
     func showSuccessAlert(successMessage: String)
@@ -51,7 +51,7 @@ class ProductInformationViewContoller: UIViewController {
 }
 
 // MARK: - ProductInformationViewContoller + IProductInformationViewContoller
-extension ProductInformationViewContoller: IProductInformationViewContoller {
+extension ProductInformationViewContoller: IProductInformationViewController {
     
     func setData(data: ProductInfoModel) {
         productInfoView.setDataToUI(productInfo: data)
