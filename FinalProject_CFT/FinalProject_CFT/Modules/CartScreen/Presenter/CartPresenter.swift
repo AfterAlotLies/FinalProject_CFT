@@ -7,11 +7,13 @@
 
 import Foundation
 
+// MARK: - ICartPresenter protocol
 protocol ICartPresenter {
     func didLoad(ui: ICartViewController)
     func willLoad(ui: ICartViewController)
 }
 
+// MARK: - CartPresenter
 class CartPresenter: ICartPresenter {
     
     private weak var ui: ICartViewController?
@@ -20,6 +22,7 @@ class CartPresenter: ICartPresenter {
     private let networkManager: INetworkManager
     private var cartProductsData = [DataRepository]()
     
+    // MARK: - Init()
     init(cartDataSource: CartCollectionViewDataSource, shoppingService: IShoppingCart, networkManager: INetworkManager) {
         self.cartDataSource = cartDataSource
         self.shoppingService = shoppingService
@@ -30,7 +33,7 @@ class CartPresenter: ICartPresenter {
         self.ui = ui
         cartDataSource.setDeleteFromCartButton { [weak self] index in
             guard let self = self else { return }
-            cartProductsData.forEach {_ in
+            cartProductsData.forEach { _ in
                 self.shoppingService.removeProductData(self.cartProductsData[index].title, 
                                                        self.cartProductsData[index].price,
                                                        self.cartProductsData[index].rating.rate,
@@ -39,6 +42,7 @@ class CartPresenter: ICartPresenter {
             cartProductsData.remove(at: index)
             self.cartDataSource.removeItem(at: index)
             self.ui?.reloadCollection()
+            self.ui?.getCountProducts(cartProductsData.count)
         }
     }
     
@@ -48,6 +52,7 @@ class CartPresenter: ICartPresenter {
     }
 }
 
+// MARK: - CartPresenter private methods
 private extension CartPresenter {
     
     func getProductsFromCoreData() {

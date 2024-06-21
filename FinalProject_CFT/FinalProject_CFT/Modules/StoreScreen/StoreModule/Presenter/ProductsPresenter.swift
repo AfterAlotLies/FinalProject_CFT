@@ -7,20 +7,20 @@
 
 import Foundation
 
-enum RequestType: String {
-    case electronics = "electronics"
-    case jewelery = "jewelery"
-    case mens = "men's%20clothing"
-    case womens = "women's%20clothing"
-}
-
+// MARK: - IProductsPresenter protocol
 protocol IProductsPresenter {
     func didLoad(ui: IProductsListViewController)
     func didSelectItem(_ indexItem: IndexPath.Element)
     func setupNextController(passingDataIndex: IndexPath.Element)
 }
 
+// MARK: - ProductsPresenter
 class ProductsPresenter: IProductsPresenter {
+    
+    private enum Constants {
+        static let successMessage = "Your product added to your cart!"
+        static let errorMessage = "You are not logged in. Please retry after log in"
+    }
     
     private weak var ui: IProductsListViewController?
     
@@ -31,6 +31,7 @@ class ProductsPresenter: IProductsPresenter {
     
     private var dataRepository = [DataRepository]()
     
+    // MARK: - Init()
     init(networkManager: INetworkManager, categoriesDataSource: CategoriesCollectionViewDataSource, productsDataSource: ProductsCollectionViewDataSource, shoppingCartService: IShoppingCart) {
         self.networkManager = networkManager
         self.categoriesDataSource = categoriesDataSource
@@ -41,15 +42,7 @@ class ProductsPresenter: IProductsPresenter {
     func didLoad(ui: IProductsListViewController) {
         self.ui = ui
         getProductsData()
-        productsDataSource.setAddToCartButton { [weak self] index in
-            guard let self = self else { return }
-            if let userToken = KeyStorage.shared.getToken(), !userToken.isEmpty {
-                self.shoppingCartService.addCartData(productData: dataRepository[index])
-                self.ui?.showSuccess(successMessage: "Your product added to your cart!")
-            } else {
-                self.ui?.showError(errorMessage: "You are not logged in. Please retry after log in")
-            }
-        }
+        setAddToCartButtonAction()
     }
     
     func didSelectItem(_ indexItem: IndexPath.Element) {
@@ -70,16 +63,31 @@ class ProductsPresenter: IProductsPresenter {
     }
     
     func setupNextController(passingDataIndex: IndexPath.Element) {
-        let productInfoPresenter = ProductsInfoPresenter(productData: dataRepository[passingDataIndex], networkManager: networkManager)
+        let productInfoPresenter = ProductsInfoPresenter(productData: dataRepository[passingDataIndex], 
+                                                         networkManager: networkManager,
+                                                         shoppingService: shoppingCartService)
         let productInfoController = ProductInformationViewContoller(productsInfoPresenter: productInfoPresenter)
         ui?.showNextController(productInfoController)
     }
 }
 
+// MARK: - ProductsPresenter private methods
 private extension ProductsPresenter {
     
     func getProductsData() {
         getProducts(for: .electronics)
+    }
+    
+    func setAddToCartButtonAction() {
+        productsDataSource.setAddToCartButton { [weak self] index in
+            guard let self = self else { return }
+            if let userToken = KeyStorage.shared.getToken(), !userToken.isEmpty {
+                self.shoppingCartService.addCartData(productData: dataRepository[index])
+                self.ui?.showSuccess(successMessage: Constants.successMessage)
+            } else {
+                self.ui?.showError(errorMessage: Constants.errorMessage)
+            }
+        }
     }
     
     func getProducts(for category: RequestType) {
@@ -107,9 +115,7 @@ private extension ProductsPresenter {
                                     self.productsDataSource.addImage(image: imageResponse)
                                 }
                             }
-                            DispatchQueue.main.async {
-                                self.ui?.reloadProductsCollectionView()
-                            }
+                            self.ui?.reloadProductsCollectionView()
                             self.ui?.setLoaderState(state: .nonAnimating)
                         }
                     }

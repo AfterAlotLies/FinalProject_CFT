@@ -8,28 +8,34 @@
 import Foundation
 import Security
 
+// MARK: - IKeyStorage protocol
 protocol IKeyStorage {
     func saveToken(token: String)
     func getToken() -> String?
     func deleteToken()
 }
-
+ 
+// MARK: - KeyStorage
 class KeyStorage: IKeyStorage {
+    
+    private enum Constants {
+        static let userNameUserDefaultsKey = "username"
+    }
     
     static let shared = KeyStorage()
     
     private init() {}
     
     var username: String? {
-        return UserDefaults.standard.string(forKey: "username")
+        return UserDefaults.standard.string(forKey: Constants.userNameUserDefaultsKey)
     }
     
     func saveUsername(username: String) {
-        UserDefaults.standard.setValue(username, forKey: "username")
+        UserDefaults.standard.setValue(username, forKey: Constants.userNameUserDefaultsKey)
     }
     
     func deleteSavedUsername() {
-        UserDefaults.standard.removeObject(forKey: "username")
+        UserDefaults.standard.removeObject(forKey: Constants.userNameUserDefaultsKey)
     }
     
     func saveToken(token: String) {

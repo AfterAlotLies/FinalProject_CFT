@@ -7,11 +7,7 @@
 
 import UIKit
 
-enum ViewState {
-    case hidden
-    case nonHidden
-}
-
+// MARK: - IAccountViewController protocol
 protocol IAccountViewController: AnyObject {
     func showErrorAlert(_ error: String)
     func controlAuthViewState(_ state: ViewState)
@@ -19,7 +15,14 @@ protocol IAccountViewController: AnyObject {
     func setUserName(_ name: String)
 }
 
+// MARK: - AccountViewController
 class AccountViewController: UIViewController {
+    
+    private enum Constants {
+        static let controllerTitle = "Account"
+        static let alertErrorTitle = "Error"
+        static let alertButtonTitle = "OK"
+    }
     
     private lazy var authView: AuthView = {
         let view = AuthView()
@@ -36,6 +39,7 @@ class AccountViewController: UIViewController {
     weak var accountControllerCoordinator: AccountControllerCoordinator?
     private let accountPresenter: AccountPresenter
     
+    // MARK: - Init()
     init(accountPresenter: AccountPresenter) {
         self.accountPresenter = accountPresenter
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +47,7 @@ class AccountViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     override func viewDidLoad() {
@@ -55,6 +59,7 @@ class AccountViewController: UIViewController {
     }
 }
 
+// MARK: - AccountViewController + IAccountViewController
 extension AccountViewController: IAccountViewController {
     
     func showErrorAlert(_ error: String) {
@@ -88,10 +93,11 @@ extension AccountViewController: IAccountViewController {
     }
 }
 
+// MARK: - AccountViewController private methods
 private extension AccountViewController {
     
     func setupController() {
-        title = "Account"
+        title = Constants.controllerTitle
         view.backgroundColor = .systemBackground
         
         view.addSubview(authView)
@@ -117,8 +123,8 @@ private extension AccountViewController {
     }
     
     func errorAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "Ok", style: .cancel)
+        let alert = UIAlertController(title: Constants.alertErrorTitle, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: Constants.alertButtonTitle, style: .cancel)
         alert.addAction(okButton)
         self.present(alert, animated: true)
     }

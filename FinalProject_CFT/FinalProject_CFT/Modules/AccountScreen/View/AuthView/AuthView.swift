@@ -7,19 +7,32 @@
 
 import UIKit
 
+// MARK: - AuthView
 class AuthView: UIView {
+    
+    private enum Constants {
+        static let logoImage = UIImage(named: "logoImage")
+        static let welcomeBackLabelText = "Welcome back!"
+        static let usernameTextFieldPlaceHolder = "Your username here..."
+        static let passwordTextFieldPlaceHolder = "Your password here..."
+        static let hideButtonImage = UIImage(named: "eyeImage")
+        static let buttonBackgroundColor: UIColor = UIColor(red: 83.0 / 255.0, green: 177.0 / 255.0, blue: 117.0 / 255.0, alpha: 1)
+        static let shopLogoImageWidthMargin: CGFloat = 74
+        static let shopLogoImageHeightMargin: CGFloat = 100
+        static let topAnchorMargin: CGFloat = 16
+    }
     
     private lazy var shopLogoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "logoImage")
+        imageView.image = Constants.logoImage
         return imageView
     }()
     
     private lazy var welcomeBackLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Welcome back!"
+        label.text = Constants.welcomeBackLabelText
         label.textAlignment = .center
         return label
     }()
@@ -27,7 +40,7 @@ class AuthView: UIView {
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Your username here..."
+        textField.placeholder = Constants.usernameTextFieldPlaceHolder
         textField.addTarget(self, action: #selector(textFieldDidChanged), for: .editingChanged)
         textField.addTarget(self, action: #selector(touchUpInsideTextField), for: .editingDidEnd)
         
@@ -45,7 +58,7 @@ class AuthView: UIView {
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Your password here..."
+        textField.placeholder = Constants.passwordTextFieldPlaceHolder
         textField.isSecureTextEntry = true
         textField.addTarget(self, action: #selector(textFieldDidChanged), for: .editingChanged)
         textField.addTarget(self, action: #selector(touchUpInsideTextField), for: .editingDidEnd)
@@ -59,7 +72,7 @@ class AuthView: UIView {
         textField.leftView = paddingView
         
         let hideButton = UIButton(type: .custom)
-        hideButton.setImage(UIImage(named: "eyeImage"), for: .normal)
+        hideButton.setImage(Constants.hideButtonImage, for: .normal)
         hideButton.contentMode = .center
         hideButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         
@@ -79,7 +92,7 @@ class AuthView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = buttonBackgroundColor
+        button.backgroundColor = Constants.buttonBackgroundColor
         button.layer.cornerRadius = 15
         button.layer.borderColor = UIColor.clear.cgColor
         
@@ -88,10 +101,10 @@ class AuthView: UIView {
         return button
     }()
     
-    private let buttonBackgroundColor: UIColor = UIColor(red: 83.0 / 255.0, green: 177.0 / 255.0, blue: 117.0 / 255.0, alpha: 1)
     private var isPasswordHidden: Bool = true
     private var actionHandler: (() -> Void)?
     
+    // MARK: - Init()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -99,7 +112,7 @@ class AuthView: UIView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     func getUsername() -> String? {
@@ -123,6 +136,7 @@ class AuthView: UIView {
     }
 }
 
+// MARK: - AuthView private methods
 private extension AuthView {
     
     func setupView() {
@@ -139,14 +153,14 @@ private extension AuthView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            shopLogoImageView.heightAnchor.constraint(equalToConstant: 100),
-            shopLogoImageView.widthAnchor.constraint(equalToConstant: 74),
+            shopLogoImageView.heightAnchor.constraint(equalToConstant: Constants.shopLogoImageHeightMargin),
+            shopLogoImageView.widthAnchor.constraint(equalToConstant: Constants.shopLogoImageWidthMargin),
             shopLogoImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            shopLogoImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            shopLogoImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.topAnchorMargin),
         ])
         
         NSLayoutConstraint.activate([
-            welcomeBackLabel.topAnchor.constraint(equalTo: shopLogoImageView.bottomAnchor, constant: 16),
+            welcomeBackLabel.topAnchor.constraint(equalTo: shopLogoImageView.bottomAnchor, constant: Constants.topAnchorMargin),
             welcomeBackLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             welcomeBackLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
@@ -159,14 +173,14 @@ private extension AuthView {
         ])
         
         NSLayoutConstraint.activate([
-            passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 16),
+            passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: Constants.topAnchorMargin),
             passwordTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18),
             passwordTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -18),
             passwordTextField.heightAnchor.constraint(equalToConstant: 54)
         ])
         
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: 16),
+            loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: Constants.topAnchorMargin),
             loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             loginButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),

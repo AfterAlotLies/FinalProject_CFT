@@ -7,12 +7,13 @@
 
 import UIKit
 
-enum UiState {
-    case hidden
-    case nonHidden
-}
-
+// MARK: - CartView
 class CartView: UIView {
+    
+    private enum Constants {
+        static let countOfProductsText = "0 Products in your cart"
+        static let notificationText = "You are not logged in to see your cart"
+    }
     
     private lazy var cartCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createProductsCollectionLayout())
@@ -26,7 +27,7 @@ class CartView: UIView {
     private lazy var countOfProductsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "0 Products in your cart"
+        label.text = Constants.countOfProductsText
         label.textAlignment = .center
         return label
     }()
@@ -36,12 +37,13 @@ class CartView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.text = "You are not logged in to see your cart"
+        label.text = Constants.notificationText
         return label
     }()
     
     private let cartDataSource: CartCollectionViewDataSource
     
+    // MARK: - Init()
     init(frame: CGRect, cartDataSource: CartCollectionViewDataSource) {
         self.cartDataSource = cartDataSource
         super.init(frame: frame)
@@ -50,7 +52,7 @@ class CartView: UIView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     func reloadCartCollection() {
@@ -89,6 +91,7 @@ class CartView: UIView {
     }
 }
 
+// MARK: - CartView private methods
 private extension CartView {
     
     func setupView() {

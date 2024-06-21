@@ -23,4 +23,5 @@ extension UserCart {
     @NSManaged public var price: Double
     @NSManaged public var rating: Double
     @NSManaged public var imageUrl: String
+    @NSManaged public var userToken: String
 }

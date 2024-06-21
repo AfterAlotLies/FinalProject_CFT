@@ -7,11 +7,22 @@
 
 import UIKit
 
+// MARK: - IProductInformationViewContoller protocol
 protocol IProductInformationViewContoller: AnyObject {
     func setData(data: ProductInfoModel)
+    func getActionHandler(completion: (() -> Void)?)
+    func showSuccessAlert(successMessage: String)
+    func showErrorAlert(errorMessage: String)
 }
 
+// MARK: - ProductInformationViewContoller
 class ProductInformationViewContoller: UIViewController {
+    
+    private enum Constants {
+        static let errorAlertTitle = "Error"
+        static let successAlertTitle = "Success"
+        static let alertButtonTitle = "OK"
+    }
     
     private lazy var productInfoView: ProductInfoView = {
         let view = ProductInfoView()
@@ -21,6 +32,7 @@ class ProductInformationViewContoller: UIViewController {
     
     private let productsInfoPresenter: ProductsInfoPresenter
     
+    // MARK: - Init
     init(productsInfoPresenter: ProductsInfoPresenter) {
         self.productsInfoPresenter = productsInfoPresenter
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +40,7 @@ class ProductInformationViewContoller: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     override func viewDidLoad() {
@@ -38,13 +50,27 @@ class ProductInformationViewContoller: UIViewController {
     }
 }
 
+// MARK: - ProductInformationViewContoller + IProductInformationViewContoller
 extension ProductInformationViewContoller: IProductInformationViewContoller {
     
     func setData(data: ProductInfoModel) {
         productInfoView.setDataToUI(productInfo: data)
     }
+    
+    func getActionHandler(completion: (() -> Void)?) {
+        productInfoView.setAddToCartActionHandler(completion: completion)
+    }
+    
+    func showErrorAlert(errorMessage: String) {
+        errorAlert(error: errorMessage)
+    }
+    
+    func showSuccessAlert(successMessage: String) {
+        successAlert(success: successMessage)
+    }
 }
 
+// MARK: - ProductInformationViewContoller private methods
 private extension ProductInformationViewContoller {
     
     func setupController() {
@@ -62,5 +88,19 @@ private extension ProductInformationViewContoller {
             productInfoView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             productInfoView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    func errorAlert(error: String) {
+        let alert = UIAlertController(title: Constants.errorAlertTitle, message: error, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: Constants.alertButtonTitle, style: .cancel)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+    }
+    
+    func successAlert(success: String) {
+        let alert = UIAlertController(title: Constants.successAlertTitle, message: success, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: Constants.alertButtonTitle, style: .cancel)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
     }
 }

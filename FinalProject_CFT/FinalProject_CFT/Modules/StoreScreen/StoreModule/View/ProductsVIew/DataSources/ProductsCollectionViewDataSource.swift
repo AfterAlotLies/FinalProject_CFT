@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - IProductsCollectionViewDataSource protocol
 protocol IProductsCollectionViewDataSource {
     func addImage(image: UIImage?)
     func addProducts(data: [DataRepository])
@@ -14,6 +15,7 @@ protocol IProductsCollectionViewDataSource {
     func setAddToCartButton(completion: ((Int) -> Void)?)
 }
 
+// MARK: - ProductsCollectionViewDataSource
 class ProductsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
     private var addToCartButton: ((Int) -> Void)?
@@ -34,6 +36,9 @@ class ProductsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
                                                      price: cellData.price,
                                                      rate: cellData.rating.rate))
         
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            cell.setupCellForDarkTheme()
+        }
         
         cell.setAddProductAction { [weak self] in
             guard let self = self else { return }
@@ -44,6 +49,7 @@ class ProductsCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 }
 
+// MARK: - ProductsCollectionViewDataSource + IProductsCollectionViewDataSource
 extension ProductsCollectionViewDataSource : IProductsCollectionViewDataSource {
     
     func addImage(image: UIImage?) {

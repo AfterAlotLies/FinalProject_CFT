@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ICartViewController protocol
 protocol ICartViewController: AnyObject {
     func reloadCollection()
     func getCountProducts(_ count: Int)
@@ -15,7 +16,12 @@ protocol ICartViewController: AnyObject {
     func getCartCollectionState(_ state: UiState)
 }
 
+// MARK: - CartViewController
 class CartViewController: UIViewController {
+    
+    private enum Constants {
+        static let controllerTitle = "Cart"
+    }
     
     private lazy var cartView: CartView = {
         let view = CartView(frame: .zero, cartDataSource: cartDataSource)
@@ -27,6 +33,7 @@ class CartViewController: UIViewController {
     private let cartDataSource: CartCollectionViewDataSource
     private let cartPresenter: CartPresenter
     
+    // MARK: - Init()
     init(cartDataSource: CartCollectionViewDataSource, cartPresenter: CartPresenter) {
         self.cartDataSource = cartDataSource
         self.cartPresenter = cartPresenter
@@ -35,7 +42,7 @@ class CartViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     override func viewDidLoad() {
@@ -50,6 +57,7 @@ class CartViewController: UIViewController {
     }
 }
 
+// MARK: - CartViewController + ICartViewController
 extension CartViewController: ICartViewController {
     
     func reloadCollection() {
@@ -88,10 +96,11 @@ extension CartViewController: ICartViewController {
     }
 }
 
+// MARK: - CartViewController private methods
 private extension CartViewController {
     
     func setupController() {
-        title = "Cart"
+        title = Constants.controllerTitle
         view.backgroundColor = .systemBackground
         
         view.addSubview(cartView)

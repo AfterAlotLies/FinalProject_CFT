@@ -7,23 +7,61 @@
 
 import UIKit
 
+// MARK: - Coordinator Protocol
 protocol Coordinator {
     var childCoordinators: [Coordinator] { get set }
     func start()
 }
 
+// MARK: - TabBarCoordinator
 class TabBarCoordinator: Coordinator {
+    
+    private enum Constants {
+        static let tabBarTinColor: UIColor = UIColor(red: 83.0 / 255.0, green: 177.0 / 255.0, blue: 177.0 / 255.0, alpha: 1)
+        
+        static let productsTabBarTitle = "Shop"
+        static let cartTabBarTitle = "Cart"
+        static let accountTabBarTitle = "Account"
+        
+        static let productTabBarImage = UIImage(named: "storeImage")
+        static let cartTabBarImage = UIImage(named: "cartImage")
+        static let accountTabBarImage = UIImage(named: "accountImage")
+    }
     
     var childCoordinators = [Coordinator]()
     var tabBarController: UITabBarController
     
-    private let tabBarTinColor: UIColor = UIColor(red: 83.0 / 255.0, green: 177.0 / 255.0, blue: 177.0 / 255.0, alpha: 1)
-    
     init() {
         self.tabBarController = UITabBarController()
     }
+
     
     func start() {
+        setupViewControllers()
+//        setupTabBarItems()
+        addTopBorderToTabBar()
+        
+    }
+    
+    func updateTabBarAppearance(with style: UIUserInterfaceStyle) {
+        switch style {
+        case .dark:
+            tabBarController.tabBar.barTintColor = .black
+            tabBarController.tabBar.unselectedItemTintColor = .white
+            tabBarController.tabBar.tintColor = .lightGray
+        default:
+            tabBarController.tabBar.barTintColor = .white
+            tabBarController.tabBar.unselectedItemTintColor = .black
+            tabBarController.tabBar.tintColor = Constants.tabBarTinColor
+        }
+    }
+    
+}
+
+// MARK: - TabBarCoordinator private methods
+private extension TabBarCoordinator {
+    
+    func setupViewControllers() {
         let productsNavigationController = UINavigationController()
         let cartNavigationController = UINavigationController()
         let accountNavigationController = UINavigationController()
@@ -44,16 +82,10 @@ class TabBarCoordinator: Coordinator {
             accountCoordinator.navigationController
         ]
         
-        productsNavigationController.tabBarItem = UITabBarItem(title: "Магазин", image: UIImage(named: "storeImage"), selectedImage: nil)
-        cartNavigationController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(named: "cartImage"), selectedImage: nil)
-        accountNavigationController.tabBarItem = UITabBarItem(title: "Аккаунт", image: UIImage(named: "accountImage"), selectedImage: nil)
-        setupTabBarItems()
-        addTopBorderToTabBar()
+        productsNavigationController.tabBarItem = UITabBarItem(title: Constants.productsTabBarTitle, image: Constants.productTabBarImage, selectedImage: nil)
+        cartNavigationController.tabBarItem = UITabBarItem(title: Constants.cartTabBarTitle, image: Constants.cartTabBarImage, selectedImage: nil)
+        accountNavigationController.tabBarItem = UITabBarItem(title: Constants.accountTabBarTitle, image: Constants.accountTabBarImage, selectedImage: nil)
     }
-    
-}
-
-private extension TabBarCoordinator {
     
     func addTopBorderToTabBar() {
         tabBarController.view.backgroundColor = .systemBackground
@@ -68,6 +100,8 @@ private extension TabBarCoordinator {
         tabBarController.tabBar.unselectedItemTintColor = .black
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.barTintColor = .white
-        tabBarController.tabBar.tintColor = tabBarTinColor
+        tabBarController.tabBar.tintColor = Constants.tabBarTinColor
     }
+    
+   
 }

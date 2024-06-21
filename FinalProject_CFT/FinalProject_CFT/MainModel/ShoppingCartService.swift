@@ -8,12 +8,15 @@
 import Foundation
 import CoreData
 
+// MARK: - IShoppingCart protocol
 protocol IShoppingCart {
     func addCartData(productData: DataRepository)
     func fetchCartData() -> [DataRepository]?
     func removeProductData(_ title: String, _ price: Double, _ rating: Double, _ imageUrl: String)
+
 }
 
+// MARK: - ShoppingCartService
 class ShoppingCartService: IShoppingCart {
     
     private let entityName: String = "UserCart"
@@ -79,6 +82,7 @@ class ShoppingCartService: IShoppingCart {
     }
 }
 
+// MARK: - ShoppingCartService private methods
 private extension ShoppingCartService {
     
     func saveContext() {

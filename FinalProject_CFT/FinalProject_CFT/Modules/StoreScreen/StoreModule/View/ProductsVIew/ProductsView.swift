@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - ICollectionViewDelegate protocol
 protocol ICollectionViewDelegate: UICollectionViewDelegate {}
 
+// MARK: - ProductsView
 class ProductsView: UIView {
     
     private lazy var caterogiesCollection: UICollectionView = {
@@ -51,6 +53,7 @@ class ProductsView: UIView {
     private let productsDataSource: ProductsCollectionViewDataSource
     private weak var collectionDelegate: ICollectionViewDelegate?
     
+    // MARK: - Init()
     init(categoriesDataSource: CategoriesCollectionViewDataSource, productsDataSource: ProductsCollectionViewDataSource, collectionDelegate: ICollectionViewDelegate) {
         self.categoriesDataSource = categoriesDataSource
         self.productsDataSource = productsDataSource
@@ -62,7 +65,7 @@ class ProductsView: UIView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     func updateCategoriesCollection() {
@@ -100,6 +103,7 @@ class ProductsView: UIView {
     }
 }
 
+// MARK: - ProductsView private methods
 private extension ProductsView {
     
     func setupView() {

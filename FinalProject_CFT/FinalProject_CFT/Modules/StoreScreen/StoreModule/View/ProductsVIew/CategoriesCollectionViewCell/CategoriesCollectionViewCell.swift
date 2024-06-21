@@ -7,7 +7,15 @@
 
 import UIKit
 
+// MARK: - CategoriesCollectionViewCell
 class CategoriesCollectionViewCell: UICollectionViewCell {
+    
+    private enum Constants {
+        static let backgroundCellColor: UIColor = UIColor(red: 221.0 / 255.0, green: 224.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
+        static let borderChoosenCellColor: UIColor = UIColor(red: 43.0 / 255.0, green: 57.0 / 255.0, blue: 185.0 / 255.0, alpha: 1)
+        static let categoryImageWidthMargin: CGFloat = 34
+        static let categoryImageHeightMargin: CGFloat = 34
+    }
     
     private lazy var categoryImageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,7 +27,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.addSubview(categoryImageView)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = backgroundCellColor
+        view.backgroundColor = Constants.backgroundCellColor
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1
         return view
@@ -36,9 +44,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     
     static let identifer = String(describing: CategoriesCollectionViewCell.self)
     
-    private let backgroundCellColor: UIColor = UIColor(red: 221.0 / 255.0, green: 224.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
-    private let borderChoosenCellColor: UIColor = UIColor(red: 43.0 / 255.0, green: 57.0 / 255.0, blue: 185.0 / 255.0, alpha: 1)
-    
+    // MARK: - Init()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupItem()
@@ -46,7 +52,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     func setImageToItem(imageName: String) {
@@ -58,7 +64,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     }
     
     func setChoosenCell() {
-        imageBackgroundView.layer.borderColor = borderChoosenCellColor.cgColor
+        imageBackgroundView.layer.borderColor = Constants.borderChoosenCellColor.cgColor
     }
     
     func setUnchoosenCell() {
@@ -66,6 +72,7 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - CategoriesCollectionViewCell private methods
 private extension CategoriesCollectionViewCell {
     
     func setupItem() {
@@ -92,8 +99,8 @@ private extension CategoriesCollectionViewCell {
         NSLayoutConstraint.activate([
             categoryImageView.centerXAnchor.constraint(equalTo: imageBackgroundView.centerXAnchor),
             categoryImageView.centerYAnchor.constraint(equalTo: imageBackgroundView.centerYAnchor),
-            categoryImageView.widthAnchor.constraint(equalToConstant: 34),
-            categoryImageView.heightAnchor.constraint(equalToConstant: 34)
+            categoryImageView.widthAnchor.constraint(equalToConstant: Constants.categoryImageWidthMargin),
+            categoryImageView.heightAnchor.constraint(equalToConstant: Constants.categoryImageHeightMargin)
         ])
         
         NSLayoutConstraint.activate([

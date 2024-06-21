@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - IAccountPresenter protocol
 protocol IAccountPresenter {
     func didLoad(ui: IAccountViewController)
     func loginAction(ui: IAccountViewController, username: String, password: String)
@@ -14,11 +15,18 @@ protocol IAccountPresenter {
     func logoutAction()
 }
 
+// MARK: - AccountPresenter
 class AccountPresenter: IAccountPresenter {
+    
+    private enum Constants {
+        static let errorFieldAlertMessage = "Fill all field's please"
+        static let errorLoginAlertMessage = "Something gone wrong. Try again"
+    }
     
     private weak var ui: IAccountViewController?
     private let networkManager: INetworkManager
     
+    // MARK: - Init()
     init(networkManager: INetworkManager) {
         self.networkManager = networkManager
     }
@@ -50,17 +58,18 @@ class AccountPresenter: IAccountPresenter {
     
     func notifyErrorToUser(ui: IAccountViewController) {
         self.ui = ui
-        ui.showErrorAlert("Fill all field's please")
+        ui.showErrorAlert(Constants.errorFieldAlertMessage)
     }
 }
 
+// MARK: - AccountPresenter private methods
 private extension AccountPresenter {
     
     func login(username: String, password: String) {
         networkManager.loginUser(username: username, password: password) { [weak self] key, error in
             guard let self = self else { return }
             if error != nil {
-                self.ui?.showErrorAlert("Something gone wrong. Try again")
+                self.ui?.showErrorAlert(Constants.errorLoginAlertMessage)
             } else {
                 if let key {
                     KeyStorage.shared.saveToken(token: key.token)

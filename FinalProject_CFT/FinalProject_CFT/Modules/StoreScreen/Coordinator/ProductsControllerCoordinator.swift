@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ProductsControllerCoordinator
 class ProductsControllerCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController

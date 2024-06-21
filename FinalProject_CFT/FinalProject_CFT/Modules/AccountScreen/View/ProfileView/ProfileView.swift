@@ -7,7 +7,16 @@
 
 import UIKit
 
+// MARK: - ProfileView
 class ProfileView: UIView {
+    
+    private enum Constants {
+        static let introductionLabelText = "There is nothing to do but we are in proccess! Now u can add products to your cart"
+        static let logoutButtonBackgroundColor: UIColor = UIColor(red: 242.0 / 255.0, green: 243.0 / 255.0, blue: 242.0 / 255.0, alpha: 1)
+        static let topAnchorMargin: CGFloat = 16
+        static let leadingAnchorMargin: CGFloat = 16
+        static let trailingAnchorMargin: CGFloat = -16
+    }
     
     private lazy var usernameLabel: UILabel = {
         let label = UILabel()
@@ -26,7 +35,7 @@ class ProfileView: UIView {
     private lazy var introductionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "There is nothing to do but we are in proccess! Now u can add products to your cart"
+        label.text = Constants.introductionLabelText
         label.textAlignment = .center
         label.numberOfLines = 3
         return label
@@ -41,16 +50,16 @@ class ProfileView: UIView {
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.clear.cgColor
-        button.backgroundColor = logoutButtonBackgroundColor
+        button.backgroundColor = Constants.logoutButtonBackgroundColor
         
         button.addTarget(self, action: #selector(logoutAction), for: .touchUpInside)
         
         return button
     }()
     
-    private let logoutButtonBackgroundColor: UIColor = UIColor(red: 242.0 / 255.0, green: 243.0 / 255.0, blue: 242.0 / 255.0, alpha: 1)
     private var logoutActionHandler: (() -> Void)?
     
+    // MARK: - Init()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -58,7 +67,7 @@ class ProfileView: UIView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
     func setLogoutAction(completion: (() -> Void)?) {
@@ -70,6 +79,7 @@ class ProfileView: UIView {
     }
 }
 
+// MARK: - ProfileView private methods
 private extension ProfileView {
     
     func setupView() {
@@ -85,30 +95,30 @@ private extension ProfileView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            usernameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            usernameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            usernameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            usernameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.topAnchorMargin),
+            usernameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingAnchorMargin),
+            usernameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Constants.trailingAnchorMargin)
         ])
         
         NSLayoutConstraint.activate([
             dividerView.heightAnchor.constraint(equalToConstant: 1),
-            dividerView.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 16),
+            dividerView.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: Constants.topAnchorMargin),
             dividerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             dividerView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
             introductionLabel.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 36),
-            introductionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            introductionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            introductionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingAnchorMargin),
+            introductionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Constants.trailingAnchorMargin)
         ])
         
         NSLayoutConstraint.activate([
             logoutButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-            logoutButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            logoutButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            logoutButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingAnchorMargin),
+            logoutButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Constants.trailingAnchorMargin),
             logoutButton.heightAnchor.constraint(equalToConstant: 67),
-            logoutButton.topAnchor.constraint(greaterThanOrEqualTo: introductionLabel.bottomAnchor, constant: 16)
+            logoutButton.topAnchor.constraint(greaterThanOrEqualTo: introductionLabel.bottomAnchor, constant: Constants.topAnchorMargin)
         ])
     }
     

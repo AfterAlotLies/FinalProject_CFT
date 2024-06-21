@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - ICartCollectionViewDataSource protocol
 protocol ICartCollectionViewDataSource {
     func setProductData(_ data: [DataRepository])
     func setImageData(_ data: UIImage?)
@@ -15,6 +16,7 @@ protocol ICartCollectionViewDataSource {
     func removeAllItems()
 }
 
+// MARK: - CartCollectionViewDataSource
 class CartCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
     private var deleteFromCartButton: ((Int) -> Void)?
@@ -29,6 +31,11 @@ class CartCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionViewCell.identifer, for: indexPath) as? CartCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            cell.setupCellForDarkTheme()
+        }
+        
         let cellData = productData[indexPath.item]
         cell.setProductsData(data: CartViewModel(title: cellData.title,
                                                  price: cellData.price,
@@ -42,6 +49,7 @@ class CartCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 }
 
+// MARK: - CartCollectionViewDataSource + ICartCollectionViewDataSource
 extension CartCollectionViewDataSource: ICartCollectionViewDataSource {
     
     func setProductData(_ data: [DataRepository]) {

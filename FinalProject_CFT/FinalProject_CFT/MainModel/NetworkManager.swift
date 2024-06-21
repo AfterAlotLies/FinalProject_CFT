@@ -8,12 +8,14 @@
 import Alamofire
 import AlamofireImage
 
+// MARK: - INetworkManager protocol
 protocol INetworkManager {
     func getImageFromUrl(_ url: String, completion: @escaping (Image?, Error?) -> Void)
     func getProducts(for category: RequestType, completion: @escaping ([DataRepository]?, Error?) -> Void)
     func loginUser(username: String, password: String, completion: @escaping (TokenData?, Error?) -> Void)
 }
 
+// MARK: - NetworkManager
 class NetworkManager: INetworkManager {
     
     func getProducts(for category: RequestType, completion: @escaping ([DataRepository]?, Error?) -> Void) {

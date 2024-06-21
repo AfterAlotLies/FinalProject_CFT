@@ -7,11 +7,7 @@
 
 import UIKit
 
-enum LoaderState {
-    case animating
-    case nonAnimating
-}
-
+// MARK: - IProductsListViewController protocol
 protocol IProductsListViewController: AnyObject {
     func reloadCategoriesCollectionView()
     func reloadProductsCollectionView()
@@ -22,7 +18,15 @@ protocol IProductsListViewController: AnyObject {
     func showSuccess(successMessage: String)
 }
 
+// MARK: - ProductsListViewController
 class ProductsListViewController: UIViewController {
+    
+    private enum Constants {
+        static let contollerTitle = "Shop"
+        static let errorAlerTitle = "Error"
+        static let alertButtonTitle = "OK"
+        static let successAlertTitle = "Success!"
+    }
     
     private lazy var productsView: ProductsView = {
         let view = ProductsView(categoriesDataSource: categoriesDataSource, productsDataSource: productsDataSource, collectionDelegate: self)
@@ -35,6 +39,7 @@ class ProductsListViewController: UIViewController {
     private let categoriesDataSource: CategoriesCollectionViewDataSource
     private let productsDataSource: ProductsCollectionViewDataSource
     
+    // MARK: - Init()
     init(productsPresenter: ProductsPresenter, categoriesDataSource: CategoriesCollectionViewDataSource, productsDataSource: ProductsCollectionViewDataSource) {
         self.productsPresenter = productsPresenter
         self.categoriesDataSource = categoriesDataSource
@@ -44,17 +49,24 @@ class ProductsListViewController: UIViewController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppErrors.fatalErrorMessage)
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
         productsPresenter.didLoad(ui: self)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
 
 }
 
+// MARK: - ProductsListViewController + IProductsListViewController
 extension ProductsListViewController: IProductsListViewController {
     
     func reloadCategoriesCollectionView() {
@@ -94,6 +106,7 @@ extension ProductsListViewController: IProductsListViewController {
 
 }
 
+// MARK: - ProductsListViewController + ICollectionViewDelegate
 extension ProductsListViewController: ICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if productsView.isCategoriesCollection(collectionView: collectionView) {
@@ -104,10 +117,11 @@ extension ProductsListViewController: ICollectionViewDelegate {
     }
 }
 
+// MARK: - ProductsListViewController private methods
 private extension ProductsListViewController {
     
     func setupController() {
-        title = "Shop"
+        title = Constants.contollerTitle
         view.backgroundColor = .systemBackground
         view.addSubview(productsView)
         
@@ -124,15 +138,15 @@ private extension ProductsListViewController {
     }
     
     func showErrorAlert(error: String) {
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .cancel)
+        let alert = UIAlertController(title: Constants.errorAlerTitle, message: error, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: Constants.alertButtonTitle, style: .cancel)
         alert.addAction(okButton)
         self.present(alert, animated: true)
     }
     
     func showSuccessAlert(success: String) {
-        let alert = UIAlertController(title: "Success!", message: success, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .cancel)
+        let alert = UIAlertController(title: Constants.successAlertTitle, message: success, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: Constants.alertButtonTitle, style: .cancel)
         alert.addAction(okButton)
         self.present(alert, animated: true)
     }
