@@ -117,7 +117,7 @@ class AuthView: UIView {
     
     func getUsername() -> String? {
         if let username = usernameTextField.text, !username.isEmpty {
-            return username
+            return username.lowercased()
         } else {
             return nil
         }
